@@ -1,0 +1,32 @@
+#root > * {
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.MuiTypography-body1 {
+  padding: 1rem;
+  overflow-wrap: break-word;
+  max-width: 50%;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #5d54a0 #2a2a2a;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5d54a0;
+  border-radius: 10px;
+  border: 3px solid #aaa;
+}

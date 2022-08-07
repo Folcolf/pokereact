@@ -1,18 +1,31 @@
-import { createTheme, ThemeProvider } from "@mui/material"
+import {
+  createTheme,
+  CssBaseline,
+  ThemeOptions,
+  ThemeProvider
+} from "@mui/material"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import "./App.scss"
 
 import { Nav } from "./components/nav/Nav"
+import { useAppSelector } from "./hooks"
+
 import { Home } from "./routes/Home"
 import { List } from "./routes/List"
 import { NotFound } from "./routes/NotFound"
+import { PokemonId } from "./routes/PokemonId"
+import { RootState } from "./stores"
 
 const App = () => {
-  const theme = createTheme({
+  const mode = useAppSelector((state: RootState) => state.dark.value)
+
+  const lightTheme = createTheme({
     palette: {
       primary: {
-        main: "#00bcff"
+        main: "#00bcff",
+        dark: "#004b65",
+        light: "#76DBFF",
       },
       secondary: {
         main: "#ff9800"
@@ -31,24 +44,68 @@ const App = () => {
       },
       action: {
         active: "#00bcd4",
-        hover: "#00bcd4",
-        selected: "#00bcd4",
+        hover: "#76DBFF",
+        selected: "#006D7A",
         disabled: "#9e9e9e",
         disabledBackground: "#fafafa"
       }
     }
   })
 
+  const darkTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#00bcff",
+        dark: "#004b65",
+        light: "#76DBFF"
+      },
+      secondary: {
+        main: "#ff9800"
+      },
+      error: {
+        main: "#f44336"
+      },
+      background: {
+        default: "#212121",
+        paper: "#323232"
+      },
+      text: {
+        primary: "#fafafa",
+        secondary: "#fafafa",
+        disabled: "#eee"
+      },
+      action: {
+        active: "#00bcd4",
+        hover: "#004b65",
+        selected: "#006D7A",
+        disabled: "#9e9e9e",
+        disabledBackground: "#212121"
+      }
+    }
+  })
+
+  const getDesignTokens = (darkMode: boolean): ThemeOptions => ({
+    palette: {
+      ...(darkMode ? darkTheme.palette : lightTheme.palette),
+      mode: darkMode ? "dark" : "light"
+    }
+  })
+
+  const theme = createTheme(getDesignTokens(mode))
+
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/list" element={<List />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <CssBaseline>
+        <BrowserRouter>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/list" element={<List />} />
+            <Route path="/pokemon/:id" element={<PokemonId />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </CssBaseline>
     </ThemeProvider>
   )
 }

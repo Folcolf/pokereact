@@ -18,3 +18,12 @@ export const TYPE_COLOR = {
   fighting: "#994025",
   psychic: "#F85888"
 }
+
+export const STAT_COLOR = {
+  hp: "#5EDC1F",
+  attack: "#ff3322",
+  defense: "#ded32a",
+  speed: "#54acde",
+  "special-attack": "#ef5910",
+  "special-defense": "#b37743"
+}

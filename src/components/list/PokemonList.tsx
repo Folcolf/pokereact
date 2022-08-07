@@ -2,7 +2,7 @@ import { ImageList, Pagination } from "@mui/material"
 import { NamedAPIResource } from "pokenode-ts"
 import { ChangeEvent, useEffect, useState } from "react"
 
-import { PokemonItem } from "./PokemonItem"
+import { PokemonItem } from "./item/PokemonItem"
 
 interface PokemonListProps {
   pokemons: NamedAPIResource[]

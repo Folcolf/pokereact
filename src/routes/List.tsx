@@ -39,8 +39,8 @@ const List = () => {
         .getGenerationById(region - 1)
         .then((gen) => gen.pokemon_species)
         .then((species) =>
-          [...species].sort((a, b) =>
-            a.url.split("/")[6].localeCompare(b.url.split("/")[6])
+          [...species].sort(
+            (a, b) => +a.url.split("/")[6] - +b.url.split("/")[6]
           )
         )
         .then(setPokemons)

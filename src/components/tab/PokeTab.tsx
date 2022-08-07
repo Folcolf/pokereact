@@ -1,4 +1,4 @@
-import { Tab, Tabs } from "@mui/material"
+import { SxProps, Tab, Tabs, Theme } from "@mui/material"
 import { GameClient, Generation } from "pokenode-ts"
 import { SyntheticEvent, useEffect, useState } from "react"
 
@@ -33,26 +33,27 @@ const PokeTab = ({ region, updateValue }: PokeTabProps) => {
     updateValue(newValue)
   }
 
-  const a11yProps = (index: number) => {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`
-    }
-  }
-
   if (isNaN(value)) {
     return <div>Loading...</div>
   }
 
+  const styles = {
+    root: {
+      ["&:hover"]: {
+        backgroundColor: (theme: Theme) => theme.palette.action.hover
+      }
+    } as SxProps
+  }
+
   return (
-    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-      <Tab label="National" value={1} {...a11yProps(1)} />
+    <Tabs value={value} onChange={handleChange}>
+      <Tab label="National" value={1} sx={styles.root} />
       {versions.map((vrs) => (
         <Tab
           key={vrs.id + 1}
-          {...a11yProps(vrs.id + 1)}
           label={vrs.main_region.name}
           value={vrs.id + 1}
+          sx={styles.root}
         />
       ))}
     </Tabs>

@@ -1,7 +1,6 @@
 import {
   Box,
   capitalize,
-  Chip,
   ImageListItem,
   SxProps,
   Typography
@@ -13,8 +12,9 @@ import {
   PokemonSpecies
 } from "pokenode-ts"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 
-import { TYPE_COLOR } from "../../utils/types"
+import { TypeList } from "../TypeList"
 
 interface PokemonItemProps {
   entry: NamedAPIResource
@@ -23,6 +23,7 @@ interface PokemonItemProps {
 const client = new PokemonClient()
 
 const PokemonItem = ({ entry }: PokemonItemProps) => {
+  const navigate = useNavigate()
   const [pokemon, setPokemon] = useState<Pokemon>()
   const [pokeSpecies, setPokeSpecies] = useState<PokemonSpecies>()
 
@@ -46,13 +47,12 @@ const PokemonItem = ({ entry }: PokemonItemProps) => {
     return sprites.front_default ?? ""
   }
 
-  const getColor = (type: string): string => {
-    const idx = Object.keys(TYPE_COLOR).indexOf(type)
-    return Object.values(TYPE_COLOR)[idx] ?? ""
-  }
-
   if (getSprites() === "") {
     return <></>
+  }
+
+  const handleClick = () => {
+    navigate(`/pokemon/${id}`)
   }
 
   const styles: SxProps = {
@@ -69,35 +69,25 @@ const PokemonItem = ({ entry }: PokemonItemProps) => {
   }
 
   return (
-    <ImageListItem key={id} sx={styles} className="pokemon-item">
-      <Box>
-        <Box className="nome">
-          <Typography variant="h4" className="nomes" sx={{ mt: 1 }}>
+    <div onClick={handleClick}>
+      <ImageListItem key={id} sx={styles}>
+        <Box>
+          <Typography variant="h4" sx={{ mt: 1 }}>
             {capitalize(names[7].name)}
           </Typography>
-        </Box>
-        {getSprites() && (
-          <Box className="image">
+          {getSprites() && (
             <img src={getSprites()} alt={species.name} width="70%" />
-          </Box>
-        )}
-        <Box className="tipo">
-          <Typography variant="h5" sx={{ m: 1 }} className="nomes">
-            #{id}
-          </Typography>
+          )}
+          <Box className="tipo">
+            <Typography variant="h5" sx={{ m: 1 }}>
+              #{id}
+            </Typography>
 
-          <Typography variant="h5" sx={{ m: 1 }} className="nomes">
-            {types.map((item) => (
-              <Chip
-                key={item.type.name}
-                label={capitalize(item.type.name)}
-                sx={{ backgroundColor: getColor(item.type.name) }}
-              />
-            ))}
-          </Typography>
+            <TypeList types={types} />
+          </Box>
         </Box>
-      </Box>
-    </ImageListItem>
+      </ImageListItem>
+    </div>
   )
 }
 

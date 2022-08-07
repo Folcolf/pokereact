@@ -6,7 +6,7 @@ const Home = () => {
       overflowY: "hidden",
       display: "flex",
       flexDirection: "column",
-      alignItems: "center"
+      alignItems: "center",
     },
     text: {
       marginTop: "2rem"

@@ -1,43 +1,47 @@
-import { Box, Link, Typography } from "@mui/material"
+import { Box, Link, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
 
 const Home = () => {
   const styles = {
     container: {
-      overflowY: "hidden",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
+      overflowY: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
     text: {
-      marginTop: "2rem"
-    }
-  }
+      marginTop: '2rem',
+    },
+  };
+
+  const { t } = useTranslation();
 
   return (
     <Box sx={styles.container}>
       <Typography variant="h2" align="center" sx={styles.text}>
-        Welcome to Pokereact!
+        {t<string>('home.title')}
       </Typography>
 
-      <Typography variant="body1" textAlign={"justify"} sx={styles.text}>
-        Pokereact is a React project that allows you to display a list of
-        Pokémon. It is based on the Pokenode API.
-      </Typography>
+      <Typography variant="body1" textAlign={'justify'} sx={styles.text} />
 
       <img src="/pokeapi.png" alt="pokemon" />
-      <Typography variant="body1" textAlign={"justify"}>
-        The Pokenode API is a REST API that allows you to retrieve data from the
-        Pokémon database. It is a free service, so you can use it for your own
-        purposes.
-        <Link href="https://pokeapi.co/">https://pokeapi.co/</Link>
+      <Typography variant="body1" textAlign={'justify'}>
+        <Trans i18nKey="home.secondaryDescription">
+          The Poke-node API is a REST API that allows you to retrieve data from
+          the Pokemon database. It is a free service, so you can use it for your
+          own purposes.
+          <Link href="https://pokeapi.co/">https://pokeapi.co/</Link>
+        </Trans>
       </Typography>
 
-      <Typography variant="body1" textAlign={"justify"}>
-        Go to the <Link href="/list">Pokemon</Link> page to see the list of
-        Pokémon.
+      <Typography variant="body1" textAlign={'justify'}>
+        <Trans i18nKey="home.link">
+          Go to the <Link href="/pokedex">Pokedex</Link> page to see the list of
+          Pokemon.
+        </Trans>
       </Typography>
     </Box>
-  )
-}
+  );
+};
 
-export { Home }
+export { Home };

@@ -1,0 +1,17 @@
+{
+  "home": {
+    "value": "Home",
+    "title": "Welcome to Pokereact!",
+    "description": "Pokereact is a React project that allows you to display a list of Pokemon. It is based on the Pokenode API.",
+    "secondaryDescription": "The Pokenode API is a REST API that allows you to retrieve data from the Pokemon database. It is a free service, so you can use it for your own purposes. <1>https://pokeapi.co/</1>",
+    "link": "Go to the <1>Pokedex</1> page to see the list of Pokemon."
+  },
+  "stats": {
+    "title": "Stats",
+    "base": "Base Stats"
+  },
+  "pokedex": {
+    "value": "Pokedex"
+  },
+  "mode": "Dark Mode"
+}

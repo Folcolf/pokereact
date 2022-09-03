@@ -1,38 +1,62 @@
-import { Box, capitalize, Chip, SxProps, Typography } from "@mui/material"
-import { PokemonType } from "pokenode-ts"
-
-import { TYPE_COLOR } from "../../utils/colors"
+import { Box, capitalize, Chip, SxProps, Typography } from '@mui/material';
+import { TYPE_COLOR } from '@utils/colors';
+import { PokemonClient, PokemonType } from 'pokenode-ts';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 
 interface ListTypeProps {
-  types: PokemonType[]
+  types: PokemonType[];
+}
+
+interface TypeName {
+  name: string;
+  locale: string;
 }
 
 const TypeList = ({ types }: ListTypeProps) => {
-  const getColor = (type: string): string => {
-    const idx = Object.keys(TYPE_COLOR).indexOf(type)
-    return Object.values(TYPE_COLOR)[idx]
-  }
+  const { i18n } = useTranslation();
+  const { language } = i18n;
+  const client = new PokemonClient();
 
-  const styles = {
-    chip: {
-      display: "grid",
-      gridAutoFlow: "column",
-      gridColumnGap: "10px"
-    } as SxProps
-  }
+  const [typesName, setTypesName] = useState<TypeName[]>([]);
+  useEffect(() => {
+    setTypesName([]);
+    types.forEach((pokeType) => {
+      client.getTypeByName(pokeType.type.name).then((type) => {
+        const { name } =
+          type.names.find((n) => n.language.name === language) ?? {};
+        setTypesName((prev) => [
+          ...prev,
+          { name: pokeType.type.name, locale: name } as TypeName,
+        ]);
+      });
+    });
+  }, [language]);
+
+  const getColor = (type: string): string => {
+    const idx = Object.keys(TYPE_COLOR).indexOf(type);
+    return Object.values(TYPE_COLOR)[idx];
+  };
+
+  const styles: SxProps = {
+    display: 'grid',
+    gridAutoFlow: 'column',
+    gridColumnGap: '10px',
+  };
+
   return (
     <Typography variant="h5" sx={{ m: 1 }}>
-      <Box sx={styles.chip}>
-        {types.map((item) => (
+      <Box sx={styles}>
+        {typesName.map(({ name, locale }: TypeName) => (
           <Chip
-            key={item.type.name}
-            label={capitalize(item.type.name)}
-            sx={{ backgroundColor: getColor(item.type.name) }}
+            key={name}
+            label={capitalize(locale)}
+            sx={{ backgroundColor: getColor(name) }}
           />
         ))}
       </Box>
     </Typography>
-  )
-}
+  );
+};
 
-export { TypeList }
+export { TypeList };

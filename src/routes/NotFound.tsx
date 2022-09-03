@@ -1,15 +1,15 @@
-import { Home } from "@mui/icons-material"
-import { Button, Container, SxProps, Typography } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Home } from '@mui/icons-material';
+import { Button, Container, SxProps, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   const styles: SxProps = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: "25vh"
-  }
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: '25vh',
+  };
 
   return (
     <Container sx={styles}>
@@ -28,7 +28,7 @@ const NotFound = () => {
         Go Home
       </Button>
     </Container>
-  )
-}
+  );
+};
 
-export { NotFound }
+export { NotFound };

@@ -1,17 +1,17 @@
-import { SxProps, Tab, Tabs, Theme } from "@mui/material"
-import { GameClient, Generation } from "pokenode-ts"
-import { SyntheticEvent, useEffect, useState } from "react"
+import { SxProps, Tab, Tabs, Theme } from '@mui/material';
+import { GameClient, Generation } from 'pokenode-ts';
+import { SyntheticEvent, useEffect, useState } from 'react';
 
 interface PokeTabProps {
-  region: number
-  updateValue: (newValue: number) => void
+  region: number;
+  updateValue: (newValue: number) => void;
 }
 
 const PokeTab = ({ region, updateValue }: PokeTabProps) => {
-  const client = new GameClient()
+  const client = new GameClient();
 
-  const [value, setValue] = useState(region)
-  const [versions, setVersions] = useState<Generation[]>([])
+  const [value, setValue] = useState(region);
+  const [versions, setVersions] = useState<Generation[]>([]);
 
   useEffect(() => {
     client
@@ -21,29 +21,29 @@ const PokeTab = ({ region, updateValue }: PokeTabProps) => {
         results.forEach((data) => {
           client.getGenerationByName(data.name).then((generation) => {
             setVersions((prev) =>
-              [...prev, generation].sort((a, b) => a.id - b.id)
-            )
-          })
-        })
-      })
-  }, [])
+              [...prev, generation].sort((a, b) => a.id - b.id),
+            );
+          });
+        });
+      });
+  }, []);
 
   const handleChange = (_event: SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-    updateValue(newValue)
-  }
+    setValue(newValue);
+    updateValue(newValue);
+  };
 
   if (isNaN(value)) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const styles = {
     root: {
-      ["&:hover"]: {
-        backgroundColor: (theme: Theme) => theme.palette.action.hover
-      }
-    } as SxProps
-  }
+      ['&:hover']: {
+        backgroundColor: (theme: Theme) => theme.palette.action.hover,
+      },
+    } as SxProps,
+  };
 
   return (
     <Tabs value={value} onChange={handleChange}>
@@ -57,7 +57,7 @@ const PokeTab = ({ region, updateValue }: PokeTabProps) => {
         />
       ))}
     </Tabs>
-  )
-}
+  );
+};
 
-export { PokeTab }
+export { PokeTab };

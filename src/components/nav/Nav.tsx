@@ -1,4 +1,4 @@
-import MenuIcon from "@mui/icons-material/Menu"
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Box,
@@ -6,42 +6,44 @@ import {
   SxProps,
   Theme,
   Toolbar,
-  Typography
-} from "@mui/material"
-import { KeyboardEvent, MouseEvent, useState } from "react"
-import { Link } from "react-router-dom"
-import { NavMenu } from "./NavMenu"
+  Typography,
+} from '@mui/material';
+import { KeyboardEvent, MouseEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { NavMenu } from './NavMenu';
+import { useTranslation } from 'react-i18next';
 
-const toolbarHeight = 64
+const toolbarHeight = 64;
 
 const Nav = () => {
-  const [open, setOpen] = useState(false)
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer =
     (value: boolean) => (event: KeyboardEvent | MouseEvent) => {
       if (
-        event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
-          (event as KeyboardEvent).key === "Shift")
+        event.type === 'keydown' &&
+        ((event as KeyboardEvent).key === 'Tab' ||
+          (event as KeyboardEvent).key === 'Shift')
       ) {
-        return
+        return;
       }
 
-      setOpen(value)
-    }
+      setOpen(value);
+    };
 
   const styles = {
     appbar: {
       zIndex: (theme: Theme) => theme.zIndex.drawer + 1,
-      background: (theme: Theme) => theme.palette.primary.main
+      background: (theme: Theme) => theme.palette.primary.main,
     } as SxProps,
     toolbar: { marginTop: `${toolbarHeight}px`, flexGrow: 1 },
     title: {
-      fontSize: "1.5rem",
-      fontWeight: "bold",
-      color: "text.primary"
-    } as SxProps
-  }
+      fontSize: '1.5rem',
+      fontWeight: 'bold',
+      color: 'text.primary',
+    } as SxProps,
+  };
 
   return (
     <AppBar position="sticky" sx={styles.appbar}>
@@ -59,14 +61,14 @@ const Nav = () => {
         <Box component="div" sx={{ flexGrow: 1 }}>
           <Link to="/">
             <Typography variant="h6" sx={styles.title}>
-              Home
+              {t<string>('home.value')}
             </Typography>
           </Link>
         </Box>
       </Toolbar>
       <NavMenu open={open} toggleDrawer={toggleDrawer} />
     </AppBar>
-  )
-}
+  );
+};
 
-export { Nav }
+export { Nav };

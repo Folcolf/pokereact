@@ -76,25 +76,20 @@ const PokemonItem = ({ entry }: PokemonItemProps) => {
   };
 
   return (
-    <div onClick={handleClick}>
-      <ImageListItem key={id} sx={styles}>
-        <Box>
-          <Typography variant="h4" sx={{ mt: 1 }}>
-            {capitalize(name)}
-          </Typography>
-          {getSprites() && (
-            <img src={getSprites()} alt={species.name} width="70%" />
-          )}
-          <Box className="tipo">
-            <Typography variant="h5" sx={{ m: 1 }}>
-              #{id}
-            </Typography>
-
-            <TypeList types={types} />
-          </Box>
-        </Box>
-      </ImageListItem>
-    </div>
+    <ImageListItem key={id} sx={styles}>
+      <Box onClick={handleClick}>
+        <Typography variant="h4" sx={{ mt: 1 }}>
+          {capitalize(name)}
+        </Typography>
+        {getSprites() && (
+          <img src={getSprites()} alt={species.name} width="70%" />
+        )}
+        <Typography variant="h5" sx={{ m: 1 }}>
+          #{id}
+        </Typography>
+      </Box>
+      <TypeList types={types} />
+    </ImageListItem>
   );
 };
 

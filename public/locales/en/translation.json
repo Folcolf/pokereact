@@ -13,5 +13,20 @@
   "pokedex": {
     "value": "Pokedex"
   },
+  "types": {
+    "value": "Types",
+    "defence": {
+      "value": "Defence",
+      "weak": "Weak",
+      "resist": "Resist",
+      "immune": "Immune"
+    },
+    "attack": {
+      "value": "Attack",
+      "efficient": "Efficient",
+      "notVeryEfficient": "Not very efficient",
+      "inefficient": "Inefficient"
+    }
+  },
   "mode": "Dark Mode"
 }

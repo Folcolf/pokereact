@@ -1,5 +1,5 @@
+import { StatsTable } from '@/components/table/StatsTable';
 import { PokemonCard } from '@components/card/PokemonCard';
-import { StatsList } from '@components/list/StatsList';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Box, Button, styled, SxProps, Typography } from '@mui/material';
 import { Pokemon, PokemonClient } from 'pokenode-ts';
@@ -81,7 +81,7 @@ const PokemonId = () => {
           <>
             <PokemonCard pokemon={pokemon} />
             <Box>
-              <StatsList stats={pokemon.stats} />
+              <StatsTable stats={pokemon.stats} />
             </Box>
           </>
         ) : (

@@ -34,6 +34,11 @@ const settings: Setting[] = [
     path: '/pokedex',
     icon: <FormatListBulleted />,
   },
+  {
+    value: 'types',
+    path: '/types',
+    icon: <FormatListBulleted />,
+  },
 ];
 
 interface NavMenuProps {

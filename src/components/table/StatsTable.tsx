@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import { STAT_COLOR } from '@utils/colors';
 import { PokemonClient, PokemonStat } from 'pokenode-ts';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ListStatsProps {
   stats: PokemonStat[];
@@ -28,7 +28,7 @@ interface StatName {
 const MIN = 0;
 const MAX = 255;
 
-const StatsList = ({ stats }: ListStatsProps) => {
+const StatsTable = ({ stats }: ListStatsProps) => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const client = new PokemonClient();
@@ -125,4 +125,4 @@ const StatsList = ({ stats }: ListStatsProps) => {
   );
 };
 
-export { StatsList };
+export { StatsTable };

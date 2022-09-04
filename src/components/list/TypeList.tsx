@@ -1,8 +1,9 @@
 import { Box, capitalize, Chip, SxProps, Typography } from '@mui/material';
 import { TYPE_COLOR } from '@utils/colors';
 import { PokemonClient, PokemonType } from 'pokenode-ts';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 interface ListTypeProps {
   types: PokemonType[];
@@ -14,6 +15,7 @@ interface TypeName {
 }
 
 const TypeList = ({ types }: ListTypeProps) => {
+  const navigate = useNavigate();
   const { i18n } = useTranslation();
   const { language } = i18n;
   const client = new PokemonClient();
@@ -32,6 +34,10 @@ const TypeList = ({ types }: ListTypeProps) => {
       });
     });
   }, [language]);
+
+  const handleClick = (id: string) => {
+    navigate(`/type/${id}`);
+  };
 
   const getColor = (type: string): string => {
     const idx = Object.keys(TYPE_COLOR).indexOf(type);
@@ -52,6 +58,7 @@ const TypeList = ({ types }: ListTypeProps) => {
             key={name}
             label={capitalize(locale)}
             sx={{ backgroundColor: getColor(name) }}
+            onClick={() => handleClick(name)}
           />
         ))}
       </Box>

@@ -12,6 +12,8 @@ import { Home } from './routes/Home';
 import { NotFound } from './routes/NotFound';
 import { Pokedex } from './routes/Pokedex';
 import { PokemonId } from './routes/PokemonId';
+import { TypeName } from './routes/TypeName';
+import { Types } from './routes/Types';
 import { RootState } from './stores';
 
 const App = () => {
@@ -99,6 +101,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/pokedex" element={<Pokedex />} />
             <Route path="/pokemon/:id" element={<PokemonId />} />
+            <Route path="/types" element={<Types />} />
+            <Route path="/type/:id" element={<TypeName />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

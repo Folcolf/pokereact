@@ -42,7 +42,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
       <Grid container spacing={2}>
         <Grid item xs={6} md={4}>
           <img
-            src={sprites.other['official-artwork']?.front_default ?? ''}
+            src={sprites.other?.['official-artwork']?.front_default ?? ''}
             width="100%"
             alt={name}
           />

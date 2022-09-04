@@ -3,7 +3,7 @@ import { TYPE_COLOR } from '@utils/colors';
 import { PokemonClient, PokemonType } from 'pokenode-ts';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface ListTypeProps {
   types: PokemonType[];
@@ -15,7 +15,6 @@ interface TypeName {
 }
 
 const TypeList = ({ types }: ListTypeProps) => {
-  const navigate = useNavigate();
   const { i18n } = useTranslation();
   const { language } = i18n;
   const client = new PokemonClient();
@@ -35,10 +34,6 @@ const TypeList = ({ types }: ListTypeProps) => {
     });
   }, [language]);
 
-  const handleClick = (id: string) => {
-    navigate(`/type/${id}`);
-  };
-
   const getColor = (type: string): string => {
     const idx = Object.keys(TYPE_COLOR).indexOf(type);
     return Object.values(TYPE_COLOR)[idx];
@@ -54,12 +49,16 @@ const TypeList = ({ types }: ListTypeProps) => {
     <Typography variant="h5" sx={{ m: 1 }}>
       <Box sx={styles}>
         {typesName.map(({ name, locale }: TypeName) => (
-          <Chip
-            key={name}
-            label={capitalize(locale)}
-            sx={{ backgroundColor: getColor(name) }}
-            onClick={() => handleClick(name)}
-          />
+          <Link to={`/type/${name}`} key={name}>
+            <Chip
+              label={capitalize(locale)}
+              sx={{
+                backgroundColor: getColor(name),
+                width: '100%',
+                cursor: 'pointer',
+              }}
+            />
+          </Link>
         ))}
       </Box>
     </Typography>

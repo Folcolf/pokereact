@@ -3,6 +3,7 @@ import {
   capitalize,
   ImageListItem,
   SxProps,
+  Theme,
   Typography,
 } from '@mui/material';
 import {
@@ -13,7 +14,7 @@ import {
 } from 'pokenode-ts';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { TypeList } from '../TypeList';
 
 interface PokemonItemProps {
@@ -23,7 +24,6 @@ interface PokemonItemProps {
 const client = new PokemonClient();
 
 const PokemonItem = ({ entry }: PokemonItemProps) => {
-  const navigate = useNavigate();
   const { i18n } = useTranslation();
 
   const [pokemon, setPokemon] = useState<Pokemon>();
@@ -58,36 +58,38 @@ const PokemonItem = ({ entry }: PokemonItemProps) => {
     return <></>;
   }
 
-  const handleClick = () => {
-    navigate(`/pokemon/${id}`);
-  };
-
-  const styles: SxProps = {
-    textAlign: 'center',
-    alignItems: 'center',
-    width: 'min-content',
-    minWidth: '256px',
-    height: '128px',
-    backgroundColor: 'background.paper',
-    '&:hover': {
+  const styles = {
+    container: {
+      textAlign: 'center',
+      alignItems: 'center',
+      width: 'min-content',
+      minWidth: '256px',
+      height: '128px',
       backgroundColor: 'background.paper',
-      cursor: 'pointer',
-    },
+      '&:hover': {
+        backgroundColor: 'background.paper',
+        cursor: 'pointer',
+      },
+    } as SxProps,
+    text: {
+      m: 1,
+      color: (theme: Theme) => theme.palette.text.primary,
+    } as SxProps,
   };
 
   return (
-    <ImageListItem key={id} sx={styles}>
-      <Box onClick={handleClick}>
-        <Typography variant="h4" sx={{ mt: 1 }}>
+    <ImageListItem key={id} sx={styles.container}>
+      <Link to={`/pokemon/${id}`}>
+        <Typography variant="h4" sx={styles.text}>
           {capitalize(name)}
         </Typography>
         {getSprites() && (
           <img src={getSprites()} alt={species.name} width="70%" />
         )}
-        <Typography variant="h5" sx={{ m: 1 }}>
+        <Typography variant="h5" sx={styles.text}>
           #{id}
         </Typography>
-      </Box>
+      </Link>
       <TypeList types={types} />
     </ImageListItem>
   );

@@ -6,6 +6,7 @@ import { Pokemon, PokemonClient } from 'pokenode-ts';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const PokemonId = () => {
   const navigate = useNavigate();
@@ -42,10 +43,6 @@ const PokemonId = () => {
       .catch(() => setNext(null));
   }, [id, i18n.language]);
 
-  const handleClick = (pokeId: number) => {
-    navigate(`/pokemon/${pokeId}`);
-  };
-
   const StyledButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
   }));
@@ -63,14 +60,19 @@ const PokemonId = () => {
       flexDirection: 'column',
       alignItems: 'center',
     } as SxProps,
+    link: {
+      height: '-webkit-fill-available',
+    },
   };
 
   return (
     <Box sx={styles.root}>
       {previous !== null ? (
-        <StyledButton onClick={() => handleClick(previous)}>
-          <ArrowBack />
-        </StyledButton>
+        <Link to={`/pokemon/${previous}`}>
+          <StyledButton sx={styles.link}>
+            <ArrowBack />
+          </StyledButton>
+        </Link>
       ) : (
         <Button disabled>
           <ArrowBack />
@@ -89,9 +91,11 @@ const PokemonId = () => {
         )}
       </Box>
       {next !== null ? (
-        <StyledButton onClick={() => handleClick(next)}>
-          <ArrowForward />
-        </StyledButton>
+        <Link to={`/pokemon/${next}`}>
+          <StyledButton sx={styles.link}>
+            <ArrowForward />
+          </StyledButton>
+        </Link>
       ) : (
         <Button disabled>
           <ArrowForward />

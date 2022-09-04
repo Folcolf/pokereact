@@ -3,10 +3,9 @@ import { Box, capitalize, Chip } from '@mui/material';
 import { GameClient, NamedAPIResource, Type } from 'pokenode-ts';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Types = () => {
-  const navigate = useNavigate();
   const client = new GameClient();
   const [types, setTypes] = useState<Type[]>([]);
 
@@ -34,6 +33,7 @@ const Types = () => {
         justifyContent: 'flex-start',
         backgroundColor: color,
         margin: '10px',
+        cursor: 'pointer',
       };
     },
   };
@@ -41,10 +41,6 @@ const Types = () => {
   const getColor = (type: string): string => {
     const idx = Object.keys(TYPE_COLOR).indexOf(type);
     return Object.values(TYPE_COLOR)[idx];
-  };
-
-  const handleClick = (id: string) => {
-    navigate(`/type/${id}`);
   };
 
   useEffect(() => {
@@ -69,14 +65,15 @@ const Types = () => {
     <Box sx={styles.container}>
       {types &&
         types.map(({ id, name, names }) => (
-          <Chip
-            key={id}
-            sx={styles.list(getColor(name))}
-            label={capitalize(
-              names.find((n) => n.language.name === language)?.name ?? '',
-            )}
-            onClick={() => handleClick(name)}
-          />
+          <Link to={`/type/${name}`} key={name}>
+            <Chip
+              key={id}
+              sx={styles.list(getColor(name))}
+              label={capitalize(
+                names.find((n) => n.language.name === language)?.name ?? '',
+              )}
+            />
+          </Link>
         ))}
     </Box>
   );

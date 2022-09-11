@@ -65,6 +65,7 @@ const PokemonItem = ({ entry }: PokemonItemProps) => {
       width: 'min-content',
       minWidth: '256px',
       height: '128px',
+      padding: '10px',
       backgroundColor: 'background.paper',
       '&:hover': {
         backgroundColor: 'background.paper',

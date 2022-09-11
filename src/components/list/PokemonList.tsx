@@ -1,4 +1,5 @@
-import { ImageList, Pagination } from '@mui/material';
+import { useWindowSize, isMobile } from '@/utils/size';
+import { ImageList, Pagination, Theme } from '@mui/material';
 import { NamedAPIResource } from 'pokenode-ts';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { PokemonItem } from './item/PokemonItem';
@@ -18,6 +19,8 @@ const PokemonList = ({ pokemons }: PokemonListProps) => {
     offset: number;
   }>({ limit: itemsPerPage, offset: 0 });
 
+  const [width, height] = useWindowSize();
+
   useEffect(() => {
     setItems(
       pokemons.slice(pagination.offset, pagination.offset + pagination.limit),
@@ -32,15 +35,23 @@ const PokemonList = ({ pokemons }: PokemonListProps) => {
     setPagination({ ...pagination, offset: (page - 1) * itemsPerPage });
   };
 
+  const styles = {
+    container: {
+      justifyItems: 'center',
+      width: '100%',
+      margin: isMobile(width, height) ? '1rem 0 0 0' : '1rem 0',
+    },
+    pagination: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: '1rem',
+      backgroundColor: (theme: Theme) => theme.palette.background.paper,
+    },
+  };
+
   return (
     <>
-      <ImageList
-        cols={1}
-        sx={{
-          justifyItems: 'center',
-          width: '100%',
-        }}
-      >
+      <ImageList cols={1} sx={styles.container}>
         {items.map((item) => (
           <PokemonItem key={item.name} entry={item} />
         ))}
@@ -49,11 +60,7 @@ const PokemonList = ({ pokemons }: PokemonListProps) => {
         count={nbPages}
         page={pagination.offset / itemsPerPage + 1}
         onChange={handleChangePage}
-        sx={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: '1rem',
-        }}
+        sx={styles.pagination}
         color="primary"
       />
     </>

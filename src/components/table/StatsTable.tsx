@@ -10,6 +10,7 @@ import {
   tableCellClasses,
   TableHead,
   TableRow,
+  Theme,
 } from '@mui/material';
 import { STAT_COLOR } from '@utils/colors';
 import { PokemonClient, PokemonStat } from 'pokenode-ts';
@@ -18,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 
 interface ListStatsProps {
   stats: PokemonStat[];
+  size: 'small' | 'medium';
 }
 
 interface StatName {
@@ -28,7 +30,7 @@ interface StatName {
 const MIN = 0;
 const MAX = 255;
 
-const StatsTable = ({ stats }: ListStatsProps) => {
+const StatsTable = ({ stats, size }: ListStatsProps) => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const client = new PokemonClient();
@@ -62,7 +64,7 @@ const StatsTable = ({ stats }: ListStatsProps) => {
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
+      fontSize: '0.8rem',
     },
   }));
 
@@ -88,10 +90,15 @@ const StatsTable = ({ stats }: ListStatsProps) => {
         } as SxProps,
       };
     },
+    body: (theme: Theme) => {
+      return {
+        border: `1px solid ${theme.palette.divider}`,
+      };
+    },
   };
 
   return (
-    <Table>
+    <Table size={size}>
       <TableHead>
         <TableRow>
           <StyledTableCell>{t<string>('stats.title')}</StyledTableCell>
@@ -100,7 +107,7 @@ const StatsTable = ({ stats }: ListStatsProps) => {
           </StyledTableCell>
         </TableRow>
       </TableHead>
-      <TableBody>
+      <TableBody sx={styles.body}>
         {statsName.map(({ name, locale }) => {
           const stat = stats.find((s) => s.stat.name === name);
 

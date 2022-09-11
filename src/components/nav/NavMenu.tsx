@@ -1,4 +1,8 @@
-import { FormatListBulleted, Home } from '@mui/icons-material';
+import {
+  CatchingPokemonOutlined,
+  FormatListBulletedOutlined,
+  Home,
+} from '@mui/icons-material';
 import {
   Box,
   Drawer,
@@ -32,12 +36,12 @@ const settings: Setting[] = [
   {
     value: 'pokedex',
     path: '/pokedex',
-    icon: <FormatListBulleted />,
+    icon: <CatchingPokemonOutlined />,
   },
   {
     value: 'types',
     path: '/types',
-    icon: <FormatListBulleted />,
+    icon: <FormatListBulletedOutlined />,
   },
 ];
 

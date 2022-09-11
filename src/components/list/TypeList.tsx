@@ -1,7 +1,7 @@
-import { Box, capitalize, Chip, SxProps, Typography } from '@mui/material';
+import { Box, capitalize, Chip, SxProps } from '@mui/material';
 import { TYPE_COLOR } from '@utils/colors';
 import { PokemonClient, PokemonType } from 'pokenode-ts';
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -39,29 +39,34 @@ const TypeList = ({ types }: ListTypeProps) => {
     return Object.values(TYPE_COLOR)[idx];
   };
 
-  const styles: SxProps = {
-    display: 'grid',
-    gridAutoFlow: 'column',
+  const containerStyle: SxProps = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
     gridColumnGap: '10px',
+    gridRowGap: '10px',
+  };
+
+  const linkStyle: CSSProperties = {
+    minWidth: '25%',
   };
 
   return (
-    <Typography variant="h5" sx={{ m: 1 }}>
-      <Box sx={styles}>
-        {typesName.map(({ name, locale }: TypeName) => (
-          <Link to={`/type/${name}`} key={name}>
-            <Chip
-              label={capitalize(locale)}
-              sx={{
-                backgroundColor: getColor(name),
-                width: '100%',
-                cursor: 'pointer',
-              }}
-            />
-          </Link>
-        ))}
-      </Box>
-    </Typography>
+    <Box sx={containerStyle}>
+      {typesName.map(({ name, locale }: TypeName) => (
+        <Link to={`/type/${name}`} key={name} style={linkStyle}>
+          <Chip
+            label={capitalize(locale)}
+            sx={{
+              backgroundColor: getColor(name),
+              width: '100%',
+              cursor: 'pointer',
+            }}
+          />
+        </Link>
+      ))}
+    </Box>
   );
 };
 

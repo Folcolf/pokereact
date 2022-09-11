@@ -1,4 +1,5 @@
 import { StatsTable } from '@/components/table/StatsTable';
+import { isMobile, useWindowSize } from '@/utils/size';
 import { PokemonCard } from '@components/card/PokemonCard';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Box, Button, styled, SxProps, Typography } from '@mui/material';
@@ -15,6 +16,7 @@ const PokemonId = () => {
   const [pokemon, setPokemon] = useState<Pokemon>();
   const [previous, setPrevious] = useState<number | null>(null);
   const [next, setNext] = useState<number | null>(null);
+  const [width, height] = useWindowSize();
 
   const client = new PokemonClient();
   const { i18n } = useTranslation();
@@ -27,10 +29,15 @@ const PokemonId = () => {
     }
     client.getPokemonById(idNumber).then((p) => setPokemon(p));
 
-    client
-      .getPokemonById(idNumber - 1)
-      .then((p) => setPrevious(p.id))
-      .catch(() => setPrevious(null));
+    if (idNumber > 1) {
+      client
+        .getPokemonById(idNumber - 1)
+        .then((p) => setPrevious(p.id))
+        .catch(() => setPrevious(null));
+    } else {
+      setPrevious(null);
+    }
+
     client
       .getPokemonById(idNumber + 1)
       .then((p) => {
@@ -52,16 +59,21 @@ const PokemonId = () => {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      height: '100%',
+      height: 'inherit',
     } as SxProps,
     container: {
-      overflowY: 'hidden',
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: height > 600 ? 'column' : 'row',
       alignItems: 'center',
+      margin: '1rem',
     } as SxProps,
     link: {
       height: '-webkit-fill-available',
+      minWidth: '0',
+      borderRadius: '0',
+    },
+    button: {
+      minWidth: '40px',
     },
   };
 
@@ -74,22 +86,23 @@ const PokemonId = () => {
           </StyledButton>
         </Link>
       ) : (
-        <Button disabled>
+        <Button disabled sx={styles.button}>
           <ArrowBack />
         </Button>
       )}
-      <Box sx={styles.container}>
-        {pokemon ? (
-          <>
-            <PokemonCard pokemon={pokemon} />
-            <Box>
-              <StatsTable stats={pokemon.stats} />
-            </Box>
-          </>
-        ) : (
-          <Typography variant="h4">Loading...</Typography>
-        )}
-      </Box>
+      {pokemon ? (
+        <Box sx={styles.container}>
+          <PokemonCard pokemon={pokemon} />
+          <Box>
+            <StatsTable
+              stats={pokemon.stats}
+              size={!isMobile(width, height) ? 'medium' : 'small'}
+            />
+          </Box>
+        </Box>
+      ) : (
+        <Typography variant="h4">Loading...</Typography>
+      )}
       {next !== null ? (
         <Link to={`/pokemon/${next}`}>
           <StyledButton sx={styles.link}>
@@ -97,7 +110,7 @@ const PokemonId = () => {
           </StyledButton>
         </Link>
       ) : (
-        <Button disabled>
+        <Button disabled sx={styles.button}>
           <ArrowForward />
         </Button>
       )}

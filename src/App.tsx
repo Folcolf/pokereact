@@ -48,6 +48,7 @@ const App = () => {
         disabled: '#9e9e9e',
         disabledBackground: '#fafafa',
       },
+      divider: '#ddd',
     },
   });
 
@@ -70,7 +71,7 @@ const App = () => {
       },
       text: {
         primary: '#fafafa',
-        secondary: '#fafafa',
+        secondary: '#b0b0b0',
         disabled: '#eee',
       },
       action: {
@@ -80,6 +81,7 @@ const App = () => {
         disabled: '#9e9e9e',
         disabledBackground: '#212121',
       },
+      divider: '#111',
     },
   });
 

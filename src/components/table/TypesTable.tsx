@@ -1,3 +1,4 @@
+import { isMobile, useWindowSize } from '@/utils/size';
 import {
   Table,
   TableBody,
@@ -17,6 +18,8 @@ interface TypesTableProps {
 const TypesTable = ({ type }: TypesTableProps) => {
   const { i18n } = useTranslation();
   const { t } = i18n;
+
+  const [width, height] = useWindowSize();
 
   const toPokemonType = (value: NamedAPIResource[]): PokemonType[] => {
     return value.map((val, i) => ({
@@ -47,7 +50,10 @@ const TypesTable = ({ type }: TypesTableProps) => {
 
   return (
     <>
-      <Table sx={styles.table}>
+      <Table
+        sx={styles.table}
+        size={!isMobile(width, height) ? 'medium' : 'small'}
+      >
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={3} sx={styles.title}>
@@ -86,7 +92,10 @@ const TypesTable = ({ type }: TypesTableProps) => {
           </TableRow>
         </TableBody>
       </Table>
-      <Table sx={styles.table}>
+      <Table
+        sx={styles.table}
+        size={!isMobile(width, height) ? 'medium' : 'small'}
+      >
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={3} sx={styles.title}>

@@ -1,4 +1,5 @@
-import { SxProps, Tab, Tabs, Theme } from '@mui/material';
+import { isMobile, useWindowSize } from '@/utils/size';
+import { Box, SxProps, Tab, Tabs, Theme } from '@mui/material';
 import { GameClient, Generation } from 'pokenode-ts';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
@@ -12,6 +13,7 @@ const PokeTab = ({ region, updateValue }: PokeTabProps) => {
 
   const [value, setValue] = useState(region);
   const [versions, setVersions] = useState<Generation[]>([]);
+  const [width, height] = useWindowSize();
 
   useEffect(() => {
     client
@@ -39,6 +41,10 @@ const PokeTab = ({ region, updateValue }: PokeTabProps) => {
 
   const styles = {
     root: {
+      maxWidth: isMobile(width, height) ? '75%' : '50%',
+      backgroundColor: (theme: Theme) => theme.palette.background.paper,
+    },
+    tab: {
       ['&:hover']: {
         backgroundColor: (theme: Theme) => theme.palette.action.hover,
       },
@@ -46,17 +52,24 @@ const PokeTab = ({ region, updateValue }: PokeTabProps) => {
   };
 
   return (
-    <Tabs value={value} onChange={handleChange}>
-      <Tab label="National" value={1} sx={styles.root} />
-      {versions.map((vrs) => (
-        <Tab
-          key={vrs.id + 1}
-          label={vrs.main_region.name}
-          value={vrs.id + 1}
-          sx={styles.root}
-        />
-      ))}
-    </Tabs>
+    <Box sx={styles.root}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons="auto"
+      >
+        <Tab label="National" value={1} sx={styles.tab} />
+        {versions.map((vrs) => (
+          <Tab
+            key={vrs.id + 1}
+            label={vrs.main_region.name}
+            value={vrs.id + 1}
+            sx={styles.tab}
+          />
+        ))}
+      </Tabs>
+    </Box>
   );
 };
 

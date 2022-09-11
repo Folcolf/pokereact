@@ -20,7 +20,7 @@ const Types = () => {
       justifyContent: 'space-evenly',
       alignSelf: 'center',
       width: '50%',
-      margin: '15% 0 15% 0',
+      margin: 'auto',
     },
     list: (color: string) => {
       return {
